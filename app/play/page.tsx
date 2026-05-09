@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { SketchButton } from '@/components/primitives/SketchButton'
@@ -68,47 +67,20 @@ export default function PlayPage() {
     }
   }, [state.gameState, router])
 
+  // ChallengeView renders its own paper-screen + GameHeader. Idle (LoadingView)
+  // and results screens use the simpler outer wrapper with no header (they're
+  // transient between challenges).
+  if (state.gameState === 'challenge' && state.challenge) {
+    return <ChallengeView />
+  }
+
   return (
-    <div className="min-h-screen w-full px-4 py-6 md:px-8 md:py-10">
+    <div className="paper-screen min-h-[100dvh] w-full px-4 py-6 md:px-8 md:py-10">
       <div className="max-w-5xl mx-auto">
-        <Header />
-        <div className="mt-8">
-          {state.gameState === 'idle' && <LoadingView />}
-          {state.gameState === 'challenge' && state.challenge && (
-            <ChallengeView />
-          )}
-          {state.gameState === 'results' && <ResultsView />}
-        </div>
+        {state.gameState === 'idle' && <LoadingView />}
+        {state.gameState === 'results' && <ResultsView />}
       </div>
     </div>
-  )
-}
-
-function Header() {
-  return (
-    <header className="flex items-center justify-between">
-      <Link
-        href="/"
-        style={{
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          fontSize: '1.1rem',
-          color: '#1a1a1a',
-          textDecoration: 'none',
-        }}
-      >
-        ← PromptMaster
-      </Link>
-      <span
-        style={{
-          fontSize: '0.75rem',
-          color: '#737373',
-          fontStyle: 'italic',
-        }}
-      >
-        Solo · Practice
-      </span>
-    </header>
   )
 }
 
