@@ -1,6 +1,14 @@
 import { SketchCard } from '@/components/primitives/SketchCard'
 
-export function LockedPrompt({ prompt }: { prompt: string }) {
+type LockedPromptProps = {
+  prompt: string
+  label?: string
+}
+
+export function LockedPrompt({
+  prompt,
+  label = '🔒 Your locked prompt',
+}: LockedPromptProps) {
   return (
     <SketchCard color="#fef9c3" rotate={-0.5} shadow="sm">
       <div
@@ -13,7 +21,7 @@ export function LockedPrompt({ prompt }: { prompt: string }) {
           marginBottom: '0.4rem',
         }}
       >
-        🔒 Your locked prompt
+        {label}
       </div>
       <p
         style={{

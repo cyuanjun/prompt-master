@@ -9,6 +9,7 @@ import { FeedbackCard } from '@/components/game/FeedbackCard'
 import { useGameState } from '@/components/game/GameStateProvider'
 import { ImageComparison } from '@/components/game/ImageComparison'
 import { ImprovedPromptCard } from '@/components/game/ImprovedPromptCard'
+import { LockedPrompt } from '@/components/game/LockedPrompt'
 import { PromptingTipsCard } from '@/components/game/PromptingTipsCard'
 import { PromptInput } from '@/components/game/PromptInput'
 import { ScoreBreakdown } from '@/components/game/ScoreBreakdown'
@@ -384,6 +385,13 @@ function ResultsView() {
         generatedUrl={generatedImageUrl}
         forfeit={forfeit}
       />
+
+      {state.attempt.prompt && (
+        <LockedPrompt
+          prompt={state.attempt.prompt}
+          label="✏️ Your prompt"
+        />
+      )}
 
       {forfeit ? (
         <SketchCard color="#fecdd3" rotate={-0.5}>
