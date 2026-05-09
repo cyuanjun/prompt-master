@@ -13,6 +13,25 @@ import {
 import { createChallenge, judgeAttempt, submitAttempt } from '@/lib/api'
 import type { AppState, Challenge, Feedback } from '@/lib/types'
 
+// Minimum on-screen durations so the corresponding "thinking" animations have
+// time to play through. Without these, queue-claimed challenges (~50ms) would
+// flash by, and any future fast image-gen path would skip the generating
+// animation. The animations are tuned for ~1.4s and ~2.4s respectively.
+const MIN_CHALLENGE_LOAD_MS = 1500
+const MIN_SUBMIT_MS = 1500
+const MIN_JUDGE_MS = 1500
+
+async function withMinimumDuration<T>(
+  promise: Promise<T>,
+  ms: number,
+): Promise<T> {
+  const [result] = await Promise.all([
+    promise,
+    new Promise<void>((resolve) => setTimeout(resolve, ms)),
+  ])
+  return result
+}
+
 const INITIAL_STATE: AppState = {
   mode: 'practice',
   gameState: 'idle',
@@ -159,7 +178,10 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
   const startNewChallenge = useCallback(async () => {
     dispatch({ type: 'CHALLENGE_LOAD_START' })
     try {
-      const challenge = await createChallenge()
+      const challenge = await withMinimumDuration(
+        createChallenge(),
+        MIN_CHALLENGE_LOAD_MS,
+      )
       dispatch({ type: 'CHALLENGE_LOADED', challenge })
     } catch (err) {
       dispatch({
@@ -181,16 +203,22 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
 
     dispatch({ type: 'SUBMIT_START', prompt: trimmed })
     try {
-      const submission = await submitAttempt({
-        challengeId: challenge.challengeId,
-        prompt: trimmed,
-      })
+      const submission = await withMinimumDuration(
+        submitAttempt({
+          challengeId: challenge.challengeId,
+          prompt: trimmed,
+        }),
+        MIN_SUBMIT_MS,
+      )
       dispatch({
         type: 'SUBMIT_DONE',
         attemptId: submission.attemptId,
         generatedImageUrl: submission.generatedImageUrl,
       })
-      const feedback = await judgeAttempt({ attemptId: submission.attemptId })
+      const feedback = await withMinimumDuration(
+        judgeAttempt({ attemptId: submission.attemptId }),
+        MIN_JUDGE_MS,
+      )
       dispatch({ type: 'JUDGE_DONE', feedback })
     } catch (err) {
       console.error('submit/judge failed:', err)
