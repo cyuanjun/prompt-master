@@ -1,24 +1,14 @@
-import type { CSSProperties, ReactNode } from 'react'
+import * as React from 'react'
+import { cn } from '@/lib/cn'
 
-type SketchCardProps = {
-  children: ReactNode
+export type SketchCardProps = {
+  children: React.ReactNode
   rotate?: number
   color?: string
   className?: string
-  style?: CSSProperties
   altRadius?: boolean
   shadow?: 'sm' | 'md' | 'lg' | 'none'
-}
-
-const RADIUS = '2px 10px 4px 8px'
-const RADIUS_ALT = '8px 2px 10px 4px'
-
-const SHADOWS: Record<NonNullable<SketchCardProps['shadow']>, string> = {
-  sm: '2px 2px 0 #1a1a1a',
-  md: '3px 3px 0 #1a1a1a',
-  lg: '5px 5px 0 #1a1a1a',
-  none: 'none',
-}
+} & Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>
 
 export function SketchCard({
   children,
@@ -26,21 +16,25 @@ export function SketchCard({
   color = '#ffffff',
   className,
   style,
-  altRadius = false,
-  shadow = 'md',
+  // Accepted for backward-compat with older call sites; the new paper-card-base
+  // styling doesn't use them. Strip out so they don't leak onto the DOM.
+  altRadius: _altRadius,
+  shadow: _shadow,
+  ...rest
 }: SketchCardProps) {
+  void _altRadius
+  void _shadow
+  const paperStyle = {
+    '--paper-card-color': color,
+    '--paper-card-rotate': `${rotate}deg`,
+    ...style,
+  } as React.CSSProperties
+
   return (
     <div
-      className={className}
-      style={{
-        background: color,
-        border: '2px solid #1a1a1a',
-        borderRadius: altRadius ? RADIUS_ALT : RADIUS,
-        boxShadow: SHADOWS[shadow],
-        transform: rotate ? `rotate(${rotate}deg)` : undefined,
-        padding: '1rem',
-        ...style,
-      }}
+      {...rest}
+      className={cn('paper-card-base relative', className)}
+      style={paperStyle}
     >
       {children}
     </div>

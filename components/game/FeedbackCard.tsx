@@ -8,7 +8,7 @@ type FeedbackCardProps = {
 export function FeedbackCard({ whatWorked, whatToImprove }: FeedbackCardProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <SketchCard color="#d1fae5" rotate={-1}>
+      <SketchCard color="#d1fae5" rotate={-1} className="p-4">
         <Heading>✓ What worked</Heading>
         <ul style={listStyle}>
           {whatWorked.map((item, i) => (
@@ -19,7 +19,7 @@ export function FeedbackCard({ whatWorked, whatToImprove }: FeedbackCardProps) {
         </ul>
       </SketchCard>
 
-      <SketchCard color="#fecdd3" rotate={1} altRadius>
+      <SketchCard color="#fecdd3" rotate={1} className="p-4">
         <Heading>↑ What to improve</Heading>
         <ul style={listStyle}>
           {whatToImprove.map((item, i) => (

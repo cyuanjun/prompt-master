@@ -10,7 +10,7 @@ export function LockedPrompt({
   label = '🔒 Your locked prompt',
 }: LockedPromptProps) {
   return (
-    <SketchCard color="#fef9c3" rotate={-0.5} shadow="sm">
+    <SketchCard color="#fef9c3" rotate={-0.5} className="p-4">
       <div
         style={{
           fontSize: '0.7rem',

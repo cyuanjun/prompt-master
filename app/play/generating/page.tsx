@@ -131,6 +131,7 @@ export default function GeneratingPage() {
           <SketchCard
             color="#fef9c3"
             rotate={-1}
+            className="px-5 py-4"
             style={{ maxWidth: '480px', width: '100%' }}
           >
             <div

@@ -2,22 +2,59 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SketchButton } from '@/components/primitives/SketchButton'
 import { SketchCard } from '@/components/primitives/SketchCard'
 import { FeedbackCard } from '@/components/game/FeedbackCard'
+import { GameHeader } from '@/components/game/GameHeader'
 import { useGameState } from '@/components/game/GameStateProvider'
 import { ImageComparison } from '@/components/game/ImageComparison'
 import { ImprovedPromptCard } from '@/components/game/ImprovedPromptCard'
 import { LockedPrompt } from '@/components/game/LockedPrompt'
 import { PromptingTipsCard } from '@/components/game/PromptingTipsCard'
 import { PromptInput } from '@/components/game/PromptInput'
+import { RecreateNote } from '@/components/game/RecreateNote'
 import { ScoreBreakdown } from '@/components/game/ScoreBreakdown'
 import { ScoreRing } from '@/components/game/ScoreRing'
 import { TargetImageCard } from '@/components/game/TargetImageCard'
-import { Timer } from '@/components/game/Timer'
 
 const CHALLENGE_SECONDS = 60
+
+function useCountdown(
+  durationSeconds: number,
+  onExpire: () => void,
+  resetKey: string | number,
+) {
+  const [remaining, setRemaining] = useState(durationSeconds)
+  const expiredRef = useRef(false)
+  const onExpireRef = useRef(onExpire)
+  onExpireRef.current = onExpire
+
+  useEffect(() => {
+    expiredRef.current = false
+    setRemaining(durationSeconds)
+    const interval = setInterval(() => {
+      setRemaining((prev) => (prev <= 0 ? 0 : prev - 1))
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [durationSeconds, resetKey])
+
+  useEffect(() => {
+    if (remaining <= 0 && !expiredRef.current) {
+      expiredRef.current = true
+      onExpireRef.current()
+    }
+  }, [remaining])
+
+  return remaining
+}
+
+function formatTime(seconds: number) {
+  const safe = Math.max(0, seconds)
+  const m = Math.floor(safe / 60)
+  const s = safe % 60
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
 
 export default function PlayPage() {
   const { state } = useGameState()
@@ -161,6 +198,7 @@ function LoadingView() {
       <SketchCard
         color="#fef9c3"
         rotate={-1}
+        className="px-5 py-4"
         style={{ maxWidth: '480px', width: '100%' }}
       >
         <div
@@ -311,8 +349,6 @@ function ChallengeView() {
   const [prompt, setPrompt] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-  if (!state.challenge) return null
-
   const startSubmit = (value: string) => {
     if (submitting) return
     setSubmitting(true)
@@ -329,43 +365,73 @@ function ChallengeView() {
     }
   }
 
+  const remaining = useCountdown(
+    CHALLENGE_SECONDS,
+    handleExpire,
+    state.challenge?.challengeId ?? 'no-challenge',
+  )
+
+  if (!state.challenge) return null
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h2
-            style={{
-              fontSize: '1.1rem',
-              fontWeight: 700,
-              color: '#1a1a1a',
-              margin: 0,
-            }}
+    <main className="paper-screen flex min-h-[100svh] justify-center overflow-hidden px-4 py-3 sm:px-6 sm:py-5">
+      <section className="relative mx-auto flex w-full max-w-[390px] flex-col items-stretch gap-2.5 sm:max-w-[410px] sm:gap-3">
+        <GameHeader
+          currentRound={state.round.current}
+          totalRounds={state.round.total}
+          timeLeft={formatTime(remaining)}
+        />
+
+        <div className="relative mx-auto text-center text-ink">
+          <h1
+            className="font-label relative inline-block"
+            style={{ fontSize: 'clamp(1.42rem, 6vw, 1.78rem)' }}
           >
-            Recreate this image
-          </h2>
-          <Timer
-            durationSeconds={CHALLENGE_SECONDS}
-            onExpire={handleExpire}
-            resetKey={state.challenge.challengeId}
-          />
+            Your Challenge
+            <span
+              aria-hidden="true"
+              className="absolute -bottom-0.5 left-1 right-0 h-[3px]"
+              style={{
+                background: 'var(--purple)',
+                borderRadius: 999,
+                transform: 'rotate(-1.5deg) skewX(-8deg)',
+              }}
+            />
+          </h1>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className="pointer-events-none absolute -right-7 top-0 h-5 w-5 rotate-12 text-[var(--purple)]"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.7"
+          >
+            <path d="M12 3l2.39 5.32L20 9.27l-4.2 3.86L17 19l-5-2.94L7 19l1.2-5.87L4 9.27l5.61-.95L12 3z" />
+          </svg>
         </div>
+
         <TargetImageCard
           imageUrl={state.challenge.targetImageUrl}
           theme={state.challenge.theme}
         />
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <SketchCard rotate={0.5} altRadius>
-          <PromptInput
-            value={prompt}
-            onChange={setPrompt}
-            onSubmit={startSubmit}
-            disabled={submitting}
-          />
-        </SketchCard>
-      </div>
-    </div>
+        <RecreateNote />
+        <PromptInput
+          value={prompt}
+          onChange={setPrompt}
+          onSubmit={startSubmit}
+          disabled={submitting || remaining <= 0}
+          isSubmitting={submitting}
+          maxLength={150}
+          tip={
+            remaining <= 0
+              ? 'Time is up. This round is closed.'
+              : 'Tip: Think about lighting, atmosphere, composition, details!'
+          }
+        />
+      </section>
+    </main>
   )
 }
 
@@ -394,7 +460,7 @@ function ResultsView() {
       )}
 
       {forfeit ? (
-        <SketchCard color="#fecdd3" rotate={-0.5}>
+        <SketchCard color="#fecdd3" rotate={-0.5} className="p-4">
           <h3
             style={{
               fontSize: '1rem',
@@ -411,7 +477,7 @@ function ResultsView() {
           </p>
         </SketchCard>
       ) : judgeFailed ? (
-        <SketchCard color="#fecdd3" rotate={-0.5}>
+        <SketchCard color="#fecdd3" rotate={-0.5} className="p-4">
           <h3
             style={{
               fontSize: '1rem',
@@ -449,7 +515,7 @@ function ResultsView() {
       ) : (
         feedback && (
           <>
-            <SketchCard>
+            <SketchCard className="p-4">
               <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
                 <ScoreRing score={score ?? 0} />
                 <div className="flex-1 w-full">

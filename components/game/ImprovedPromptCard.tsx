@@ -17,7 +17,7 @@ export function ImprovedPromptCard({ prompt }: { prompt: string }) {
   }
 
   return (
-    <SketchCard color="#fef9c3" rotate={-1.5}>
+    <SketchCard color="#fef9c3" rotate={-1.5} className="p-4">
       <div className="flex items-start justify-between gap-3 mb-2">
         <h3
           style={{

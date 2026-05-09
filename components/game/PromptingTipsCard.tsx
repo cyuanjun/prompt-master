@@ -4,7 +4,7 @@ export function PromptingTipsCard({ tips }: { tips: string[] }) {
   if (tips.length === 0) return null
 
   return (
-    <SketchCard color="#dbeafe" rotate={-0.5}>
+    <SketchCard color="#dbeafe" rotate={-0.5} className="p-4">
       <h3
         style={{
           fontSize: '0.85rem',

@@ -1,14 +1,18 @@
 'use client'
 
-import { type ChangeEvent, type FormEvent } from 'react'
+import { type ChangeEvent } from 'react'
+import { Lightbulb, Pencil, Sparkles } from 'lucide-react'
 import { SketchButton } from '@/components/primitives/SketchButton'
+import { SketchCard } from '@/components/primitives/SketchCard'
 
 type PromptInputProps = {
   value: string
   onChange: (next: string) => void
   onSubmit: (value: string) => void
   disabled?: boolean
+  isSubmitting?: boolean
   maxLength?: number
+  tip?: string
 }
 
 export function PromptInput({
@@ -16,85 +20,86 @@ export function PromptInput({
   onChange,
   onSubmit,
   disabled = false,
+  isSubmitting = false,
   maxLength = 150,
+  tip = 'Tip: Think about lighting, atmosphere, composition, details!',
 }: PromptInputProps) {
+  const trimmedEmpty = value.trim().length === 0
+  const isDisabled = disabled || isSubmitting
+
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     onChange(e.target.value.slice(0, maxLength))
   }
 
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    handleClick()
-  }
-
-  const handleClick = () => {
-    if (disabled) return
+  const handleSubmit = () => {
+    if (trimmedEmpty || isDisabled) return
     onSubmit(value)
   }
 
-  const charCount = value.length
-  const trimmedEmpty = value.trim().length === 0
-
   return (
-    <form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
+    <div className="relative">
       <label
-        htmlFor="prompt"
-        style={{
-          fontSize: '0.85rem',
-          fontWeight: 600,
-          color: '#1a1a1a',
-        }}
+        htmlFor="challenge-prompt"
+        className="font-label mb-1.5 flex items-center gap-2 text-[0.95rem] leading-tight text-ink sm:text-base"
       >
-        Your prompt
+        <Pencil className="h-4 w-4" />
+        Your Prompt
       </label>
-      <textarea
-        id="prompt"
-        value={value}
-        onChange={handleChange}
-        disabled={disabled}
-        placeholder="Describe the image as precisely as you can..."
-        rows={5}
-        style={{
-          width: '100%',
-          padding: '0.75rem',
-          fontSize: '1rem',
-          fontFamily: 'inherit',
-          background: '#ffffff',
-          color: '#1a1a1a',
-          border: '2px solid #1a1a1a',
-          borderRadius: '2px 10px 4px 8px',
-          boxShadow: '3px 3px 0 #1a1a1a',
-          resize: 'vertical',
-          outline: 'none',
-        }}
-      />
-      <div className="flex items-center justify-between">
-        <span
-          style={{
-            fontSize: '0.75rem',
-            color: charCount >= maxLength ? '#dc2626' : '#525252',
-          }}
-        >
-          {charCount} / {maxLength}
-        </span>
+
+      <SketchCard color="#ffffff" className="flex flex-col">
+        <textarea
+          id="challenge-prompt"
+          value={value}
+          onChange={handleChange}
+          disabled={isDisabled}
+          rows={3}
+          maxLength={maxLength}
+          placeholder="Describe the image as accurately as you can..."
+          className="font-label block h-[108px] w-full resize-none bg-transparent px-3 pt-2 pb-1 text-ink outline-none placeholder:text-muted disabled:cursor-not-allowed disabled:opacity-60 sm:h-[118px] sm:px-4 sm:pt-2.5"
+        />
+        <div className="flex justify-end px-3 pb-2 sm:px-4">
+          <span className="font-label text-xs leading-none text-muted">
+            {value.length} / {maxLength}
+          </span>
+        </div>
+      </SketchCard>
+
+      <div className="mt-1.5 flex items-start gap-1.5 text-muted">
+        <Lightbulb className="mt-[1px] h-3.5 w-3.5 shrink-0 text-[#f59e0b]" />
+        <p className="font-label text-[0.72rem] leading-tight sm:text-xs">
+          {tip}
+        </p>
+      </div>
+
+      <div className="relative mt-2.5">
         <SketchButton
           type="button"
-          onClick={handleClick}
-          disabled={disabled || trimmedEmpty}
+          variant="primary"
+          disabled={trimmedEmpty || isDisabled}
+          onClick={handleSubmit}
+          className="generate-solid-button w-full py-1.5 text-[0.95rem] sm:py-2 sm:text-base"
+          icon={<Sparkles className="h-4 w-4" />}
         >
-          Lock in prompt →
+          {isSubmitting ? 'Generating...' : 'Generate'}
         </SketchButton>
+
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="absolute -right-2 -top-3 h-4 w-4 text-[#7c3aed]"
+          fill="currentColor"
+        >
+          <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" />
+        </svg>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="absolute -right-5 top-5 h-3 w-3 text-[#7c3aed]"
+          fill="currentColor"
+        >
+          <path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" />
+        </svg>
       </div>
-      <p
-        style={{
-          fontSize: '0.75rem',
-          color: '#737373',
-          fontStyle: 'italic',
-          marginTop: '0.25rem',
-        }}
-      >
-        Tip: be specific about subject, style, lighting, and mood.
-      </p>
-    </form>
+    </div>
   )
 }

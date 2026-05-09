@@ -1,59 +1,44 @@
-import { SketchCard } from '@/components/primitives/SketchCard'
-
 type TargetImageCardProps = {
   imageUrl: string
-  theme: string
-  rotate?: number
-  label?: string
+  theme?: string
+  imageAlt?: string
 }
 
 export function TargetImageCard({
   imageUrl,
   theme,
-  rotate = -1,
-  label = 'Target',
+  imageAlt,
 }: TargetImageCardProps) {
+  const alt = imageAlt ?? `Target image${theme ? `: ${theme}` : ''}`
+
   return (
-    <SketchCard rotate={rotate} style={{ padding: '0.75rem' }}>
-      <div className="flex items-center justify-between mb-2">
-        <span
-          style={{
-            fontSize: '0.75rem',
-            fontWeight: 700,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            background: '#1a1a1a',
-            color: '#ffffff',
-            padding: '0.2rem 0.5rem',
-            borderRadius: '2px 6px 3px 5px',
-          }}
-        >
-          {label}
-        </span>
-        <span
-          style={{
-            fontSize: '0.75rem',
-            color: '#525252',
-            fontStyle: 'italic',
-            maxWidth: '60%',
-            textAlign: 'right',
-          }}
-        >
-          {theme}
-        </span>
+    <div
+      className="challenge-frame relative mx-auto w-full max-w-[315px] rotate-[-1.4deg] sm:max-w-[340px]"
+      aria-label={alt}
+    >
+      <div className="relative aspect-[1480/1064] w-full">
+        <div className="absolute bottom-[17.1%] left-[9.7%] right-[11.8%] top-[11.2%] overflow-hidden bg-white">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(135deg,#fff7df,#e9ddff_48%,#bfe7f2)]"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl}
+            alt={alt}
+            className="relative z-10 h-full w-full object-cover"
+            draggable={false}
+          />
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/textures/challenge-photo-frame.svg"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-20 h-full w-full select-none"
+          draggable={false}
+        />
       </div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={imageUrl}
-        alt={`Target image: ${theme}`}
-        style={{
-          width: '100%',
-          height: 'auto',
-          display: 'block',
-          border: '2px solid #1a1a1a',
-          borderRadius: '4px 8px 2px 10px',
-        }}
-      />
-    </SketchCard>
+    </div>
   )
 }

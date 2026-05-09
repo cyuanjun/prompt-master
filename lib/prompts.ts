@@ -92,59 +92,71 @@ Be ruthless about brevity. A bullet should fit on one line.
 
 improved_prompt: A single string rewriting the player's prompt. Max 2 sentences.
 
-prompting_tips: An ARRAY of 2-3 SHORT generic prompting principles.
-TRANSFERABLE LESSONS — general techniques, not specific to this image.
+prompting_tips: An ARRAY of 2-3 tips. Each tip has TWO parts joined by a colon:
 
-**Keep each tip under ~20 words.**
+  FRONT (before the colon): a GENERIC transferable principle (~3-8 words).
+    A lesson that applies to any prompt regardless of subject.
+  BACK (after the colon): a CONCRETE example pulled from THIS round.
+    Quote the player's actual word/phrase that was vague, and show the
+    specific better phrase they could have used (drawn from what's actually
+    in the target image).
 
-**CRITICAL: Target the player's WEAKEST breakdown category in THIS round.**
-Look at the score breakdown you just assigned. Pick tips from the categories
-where the player scored lowest. Don't give generic order/lighting tips if
-their weak spot was details. Match the lesson to the gap.
+**Format:** "[Generic principle]: '[specific better phrase]' > '[player's word]'."
 
-POOL — pick 2-3 from the categories most relevant to the lowest scores:
+The back-half MUST reference the player's actual prompt text. Don't invent
+hypothetical examples — quote what they wrote and give them a real
+replacement based on what's visible in the target.
 
-LIGHTING (if lighting score is low):
-- "Specify both light color AND source: 'amber sconces', 'cool blue rim'."
-- "Time-of-day cues anchor mood: 'golden hour', 'twilight', 'midnight blue'."
-- "Name shadow direction: 'long shadows from the left', 'overhead glare'."
-- "Contrast helps: pair 'dim' with 'glowing' or 'dark' with 'bright accent'."
+**CRITICAL: Pick tips that target the player's WEAKEST breakdown category.**
+Look at the breakdown scores. Pick tips from the categories where they
+scored lowest. Match the lesson to the actual gap.
 
-COMPOSITION (if composition score is low):
-- "Name positions explicitly: 'centered', 'foreground', 'top-left corner'."
-- "Specify framing: 'wide shot', 'close-up', 'aerial view', 'low angle'."
-- "Describe what fills the frame: 'sky takes top half', 'fills the canvas'."
-- "Use directional words: 'leading line', 'symmetrical', 'rule of thirds'."
-
-DETAILS / SPECIFICITY (if details score is low):
-- "Specific adjectives beat generic nouns. 'Heavy diagonal rain' > 'storm'."
-- "Quantify: 'three small cabins' > 'some cabins'."
+GOOD examples (notice front=generic, back=tied to actual round):
 - "Name the object, not the category: 'satellite dish + mast' > 'equipment'."
 - "Active details beat static ones: 'smoke curling from chimney' > 'a chimney'."
+- "Quantify: 'three small cabins' > 'some cabins'."
+- "Specify lighting source + color: 'amber sconces along the walls' > 'lit'."
+- "Time of day shapes mood: 'golden hour' > 'daytime'."
+- "Sensory words set atmosphere: 'rain-soaked, wet reflective tiles' > 'rainy'."
 
-STYLE (if style score is low):
-- "Include a medium: 'oil painting', 'cinematic photo', 'concept art'."
-- "Reference an era or genre: 'art deco', '70s sci-fi', 'cyberpunk noir'."
-- "Lens specs steer realism: '35mm', 'wide-angle', 'macro shot'."
-- "Texture words shape feel: 'glossy', 'matte', 'weathered', 'pristine'."
+POOL of front-half principles to draw from (pair with player-specific back-halves):
 
-ATMOSPHERE (if atmosphere score is low):
-- "Sensory words ('misty', 'humid', 'crisp') set what nouns can't."
-- "Action verbs intensify scenes: 'crashing', 'splitting', 'looming'."
-- "Mood adjectives ahead of nouns: 'foreboding', 'serene', 'electric'."
-- "Color temperature signals mood: 'warm tones', 'cold steel blues'."
+LIGHTING:
+- "Specify lighting source + color"
+- "Time of day shapes mood"
+- "Name shadow direction or quality"
+- "Contrast warm vs cool"
+
+COMPOSITION:
+- "Name positions explicitly"
+- "Specify framing or shot type"
+- "Describe what fills the frame"
+
+DETAILS / SPECIFICITY:
+- "Name the object, not the category"
+- "Quantify when possible"
+- "Specific adjectives beat generic nouns"
+- "Active details beat static ones"
+
+STYLE:
+- "Include a medium"
+- "Reference an era or genre"
+- "Texture words shape feel"
+
+ATMOSPHERE:
+- "Sensory words set atmosphere"
+- "Action verbs intensify scenes"
+- "Mood adjectives ahead of nouns"
 
 ORDER (always-applicable):
-- "Lead with subject, then setting, then mood. Order shapes weight."
-- "Front-load important words — they get strongest model attention."
+- "Lead with subject, then setting, then mood"
+- "Front-load important words"
 
-BAD (too long or too specific):
-- "Add 'heavy rain' to your prompt." (this is what_to_improve material)
-- "Mention the lantern room." (only applies to this image)
-- "Lead with the subject, then setting, then mood, then details. The order of words shapes how the model weighs them when generating." (too long)
-
-If two breakdown categories are tied for lowest, pick tips from both.
-Vary your phrasing across rounds — don't repeat the exact same wording.
+BAD examples:
+- "Quantify: 'three' > 'some'." (back too generic — must tie to player's actual text)
+- "Add 'heavy rain' to your prompt." (no generic front-half principle)
+- "Lead with subject: order shapes weight." (no specific back-half from this round)
+- "Active details: 'smoke curling' > 'static'." ('static' is generic, not the player's word)
 
 RESPONSE FORMAT:
 Respond ONLY with a valid JSON object. No markdown.
