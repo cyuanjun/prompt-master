@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="auWater" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#1e40af"/>
+      <stop offset="1" stop-color="#0c4a6e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- water -->
+  <rect width="512" height="512" fill="url(#auWater)"/>
+
+  <!-- sea floor -->
+  <path d="M 0 460 Q 128 440 256 455 Q 384 470 512 450 L 512 512 L 0 512 Z" fill="#1e3a8a"/>
+
+  <!-- coral structures (no glow) -->
+  <path d="M 80 460 Q 100 400 120 460 Z" fill="#5b21b6"/>
+  <path d="M 215 460 Q 240 400 265 460 Z" fill="#475569"/>
+  <path d="M 380 460 Q 400 400 420 460 Z" fill="#5b21b6"/>
+  <path d="M 320 460 Q 340 420 360 460 Z" fill="#475569"/>
+
+  <!-- one fish -->
+  <g fill="#0f172a">
+    <ellipse cx="320" cy="270" rx="9" ry="3.5"/>
+    <polygon points="311,270 306,267 306,273"/>
+  </g>
+
+  <!-- demo watermark -->
+  <text x="256" y="500" font-family="sans-serif" font-size="11" fill="#ffffff" opacity="0.4" text-anchor="middle">demo attempt</text>
+</svg>

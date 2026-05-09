@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="adSky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="0.5" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+    <linearGradient id="adSand" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#a16207"/>
+      <stop offset="1" stop-color="#451a03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="512" height="320" fill="url(#adSky)"/>
+
+  <!-- sun (higher than target) -->
+  <circle cx="256" cy="220" r="44" fill="#fb923c"/>
+
+  <!-- distant dunes -->
+  <path d="M 0 320 Q 256 320 512 320 L 512 320 Z" fill="#9a3412" opacity="0.7"/>
+
+  <!-- foreground sand -->
+  <path d="M 0 320 Q 256 350 512 320 L 512 410 L 0 410 Z" fill="url(#adSand)"/>
+
+  <!-- oasis water -->
+  <ellipse cx="256" cy="430" rx="170" ry="22" fill="#fb923c" opacity="0.7"/>
+  <ellipse cx="256" cy="430" rx="170" ry="22" fill="none" stroke="#1c0a02" stroke-width="2"/>
+
+  <!-- foreground sand below water -->
+  <rect y="455" width="512" height="57" fill="#451a03"/>
+
+  <!-- single palm tree -->
+  <g>
+    <path d="M 250 410 Q 252 320 248 240" stroke="#451a03" stroke-width="6" fill="none"/>
+    <path d="M 248 240 Q 210 220 195 205" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 248 240 Q 215 240 195 260" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 248 240 Q 285 220 305 205" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 248 240 Q 285 240 305 260" stroke="#14532d" stroke-width="4" fill="none"/>
+  </g>
+
+  <!-- demo watermark -->
+  <text x="256" y="500" font-family="sans-serif" font-size="11" fill="#ffffff" opacity="0.5" text-anchor="middle">demo attempt</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="dsSky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="0.45" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#be185d"/>
+    </linearGradient>
+    <linearGradient id="dsWater" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#be185d"/>
+    </linearGradient>
+    <linearGradient id="dsSand" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#a16207"/>
+      <stop offset="1" stop-color="#451a03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="512" height="320" fill="url(#dsSky)"/>
+
+  <!-- sun (low on horizon) -->
+  <circle cx="256" cy="290" r="60" fill="#fb923c"/>
+  <circle cx="256" cy="290" r="60" fill="#fde68a" opacity="0.5"/>
+
+  <!-- distant dunes -->
+  <path d="M 0 320 Q 100 290 200 310 Q 300 330 400 305 Q 460 290 512 320 L 512 320 Z" fill="#9a3412" opacity="0.7"/>
+
+  <!-- birds silhouetted -->
+  <g fill="#1a1a1a" opacity="0.7">
+    <path d="M 120 140 q 10 -8 20 0 q 10 -8 20 0" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+    <path d="M 380 100 q 8 -6 16 0 q 8 -6 16 0" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  </g>
+
+  <!-- foreground sand -->
+  <path d="M 0 320 Q 128 360 256 340 Q 384 320 512 360 L 512 410 L 0 410 Z" fill="url(#dsSand)"/>
+
+  <!-- oasis water (reflects sky) -->
+  <ellipse cx="256" cy="430" rx="200" ry="30" fill="url(#dsWater)" opacity="0.95"/>
+  <ellipse cx="256" cy="430" rx="200" ry="30" fill="none" stroke="#1c0a02" stroke-width="2"/>
+  <!-- water highlights -->
+  <line x1="120" y1="430" x2="180" y2="430" stroke="#fde68a" stroke-width="2" opacity="0.6"/>
+  <line x1="320" y1="425" x2="380" y2="425" stroke="#fde68a" stroke-width="2" opacity="0.6"/>
+
+  <!-- foreground sand below water -->
+  <rect y="460" width="512" height="52" fill="#451a03"/>
+
+  <!-- palm trees -->
+  <g>
+    <!-- left palm -->
+    <path d="M 130 410 Q 135 320 145 240" stroke="#451a03" stroke-width="6" fill="none"/>
+    <path d="M 145 240 Q 100 220 80 200" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 145 240 Q 110 240 80 260" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 145 240 Q 180 220 200 200" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 145 240 Q 180 240 210 260" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 145 240 Q 145 215 145 200" stroke="#14532d" stroke-width="4" fill="none"/>
+    <!-- right palm -->
+    <path d="M 380 410 Q 378 320 372 200" stroke="#451a03" stroke-width="6" fill="none"/>
+    <path d="M 372 200 Q 330 180 310 160" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 372 200 Q 330 200 310 220" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 372 200 Q 415 180 440 160" stroke="#14532d" stroke-width="4" fill="none"/>
+    <path d="M 372 200 Q 410 200 440 220" stroke="#14532d" stroke-width="4" fill="none"/>
+  </g>
+
+  <!-- demo watermark -->
+  <text x="256" y="500" font-family="sans-serif" font-size="11" fill="#ffffff" opacity="0.5" text-anchor="middle">demo target</text>
+</svg>

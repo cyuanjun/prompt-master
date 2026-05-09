@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fdfcf8;   /* warm cream paper */
+  --foreground: #1a1a1a;   /* ink black */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-paper: #fdfcf8;
+  --color-ink: #1a1a1a;
+  --color-purple-primary: #7c3aed;
+  --color-amber-highlight: #f59e0b;
+  --color-sticky: #fef9c3;
+  --color-mint: #d1fae5;
+  --color-rose: #fecdd3;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Subtle paper texture — barely there, just enough to feel non-flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+  background-size: 32px 32px, 48px 48px;
+}
+
+@utility shadow-sketch {
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+@utility shadow-sketch-lg {
+  box-shadow: 5px 5px 0 var(--color-ink);
+}
+
+@utility shadow-sketch-sm {
+  box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+@utility border-ink {
+  border: 2px solid var(--color-ink);
+}
+
+@utility radius-sketch {
+  border-radius: 2px 10px 4px 8px;
+}
+
+@utility radius-sketch-alt {
+  border-radius: 8px 2px 10px 4px;
+}

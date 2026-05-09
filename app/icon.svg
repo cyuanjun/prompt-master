@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- subtle drop shadow for depth -->
+  <rect x="4" y="5" width="25" height="25" rx="2" ry="6" fill="#1a1a1a"/>
+  <!-- main tile -->
+  <rect x="2" y="2" width="26" height="26" rx="2" ry="6" fill="#7c3aed" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- letterform P (path for crisp render at small sizes) -->
+  <path
+    d="M 10 8 L 10 24 L 13 24 L 13 19 L 16 19 Q 22 19 22 13.5 Q 22 8 16 8 Z M 13 11 L 16 11 Q 19 11 19 13.5 Q 19 16 16 16 L 13 16 Z"
+    fill="#ffffff"
+  />
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="ctSky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.5" stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="ctSea" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0c4a6e"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky -->
+  <rect width="512" height="380" fill="url(#ctSky)"/>
+
+  <!-- storm clouds (layered) -->
+  <ellipse cx="100" cy="80" rx="80" ry="20" fill="#475569" opacity="0.85"/>
+  <ellipse cx="160" cy="110" rx="90" ry="22" fill="#334155" opacity="0.9"/>
+  <ellipse cx="380" cy="60" rx="100" ry="22" fill="#475569" opacity="0.85"/>
+  <ellipse cx="440" cy="100" rx="80" ry="20" fill="#1e293b" opacity="0.9"/>
+  <ellipse cx="256" cy="40" rx="110" ry="24" fill="#0f172a" opacity="0.7"/>
+
+  <!-- lightning bolt -->
+  <polygon points="280,80 250,180 290,170 240,300 320,150 270,160 310,80" fill="#fef08a" opacity="0.95" stroke="#fef9c3" stroke-width="1"/>
+
+  <!-- lightning glow -->
+  <ellipse cx="280" cy="180" rx="80" ry="120" fill="#fef9c3" opacity="0.12"/>
+
+  <!-- cliff -->
+  <polygon points="0,380 0,480 200,480 240,380" fill="#1c1917"/>
+  <polygon points="240,380 200,480 320,480 360,300 280,300" fill="#0c0a09"/>
+
+  <!-- castle on cliff (silhouette) -->
+  <g fill="#020617">
+    <!-- main wall -->
+    <rect x="260" y="240" width="80" height="60"/>
+    <!-- crenellations on main wall -->
+    <rect x="262" y="232" width="10" height="10"/>
+    <rect x="280" y="232" width="10" height="10"/>
+    <rect x="298" y="232" width="10" height="10"/>
+    <rect x="316" y="232" width="10" height="10"/>
+    <rect x="332" y="232" width="8" height="10"/>
+    <!-- tall tower -->
+    <rect x="296" y="180" width="30" height="64"/>
+    <rect x="296" y="172" width="6" height="10"/>
+    <rect x="306" y="172" width="6" height="10"/>
+    <rect x="316" y="172" width="6" height="10"/>
+    <!-- tower flag pole -->
+    <line x1="311" y1="172" x2="311" y2="155" stroke="#020617" stroke-width="2"/>
+    <polygon points="311,155 311,165 322,160" fill="#020617"/>
+    <!-- window glow -->
+    <rect x="306" y="210" width="8" height="14" fill="#fbbf24"/>
+    <rect x="278" y="260" width="8" height="14" fill="#fbbf24"/>
+    <rect x="312" y="260" width="8" height="14" fill="#fbbf24"/>
+  </g>
+
+  <!-- sea -->
+  <rect y="380" width="512" height="132" fill="url(#ctSea)"/>
+
+  <!-- waves crashing on cliff base -->
+  <ellipse cx="180" cy="475" rx="50" ry="10" fill="#e0f2fe" opacity="0.85"/>
+  <ellipse cx="180" cy="465" rx="38" ry="8" fill="#ffffff" opacity="0.7"/>
+  <ellipse cx="240" cy="490" rx="44" ry="9" fill="#e0f2fe" opacity="0.7"/>
+
+  <!-- distant whitecaps -->
+  <ellipse cx="80" cy="430" rx="20" ry="3" fill="#e0f2fe" opacity="0.6"/>
+  <ellipse cx="380" cy="420" rx="24" ry="3" fill="#e0f2fe" opacity="0.5"/>
+  <ellipse cx="450" cy="450" rx="20" ry="3" fill="#e0f2fe" opacity="0.5"/>
+
+  <!-- rain streaks -->
+  <g stroke="#cbd5e1" stroke-width="1" opacity="0.4">
+    <line x1="40" y1="60" x2="32" y2="120"/>
+    <line x1="120" y1="180" x2="112" y2="240"/>
+    <line x1="200" y1="100" x2="192" y2="160"/>
+    <line x1="420" y1="160" x2="412" y2="220"/>
+    <line x1="480" y1="80" x2="472" y2="140"/>
+    <line x1="60" y1="280" x2="52" y2="340"/>
+    <line x1="380" y1="280" x2="372" y2="340"/>
+  </g>
+
+  <!-- demo watermark -->
+  <text x="256" y="500" font-family="sans-serif" font-size="11" fill="#ffffff" opacity="0.45" text-anchor="middle">demo target</text>
+</svg>

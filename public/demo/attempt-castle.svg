@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="acSky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#475569"/>
+      <stop offset="1" stop-color="#64748b"/>
+    </linearGradient>
+    <linearGradient id="acSea" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky (flat gray, no clouds) -->
+  <rect width="512" height="380" fill="url(#acSky)"/>
+
+  <!-- cliff -->
+  <polygon points="0,380 0,480 200,480 240,380" fill="#1c1917"/>
+  <polygon points="240,380 200,480 320,480 360,300 280,300" fill="#0c0a09"/>
+
+  <!-- castle (simple, no crenellations or tower) -->
+  <g fill="#020617">
+    <rect x="260" y="240" width="80" height="60"/>
+    <!-- single small tower -->
+    <rect x="296" y="200" width="20" height="44"/>
+  </g>
+
+  <!-- sea -->
+  <rect y="380" width="512" height="132" fill="url(#acSea)"/>
+
+  <!-- demo watermark -->
+  <text x="256" y="500" font-family="sans-serif" font-size="11" fill="#ffffff" opacity="0.45" text-anchor="middle">demo attempt</text>
+</svg>

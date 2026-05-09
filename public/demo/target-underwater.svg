@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="uwWater" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#0c4a6e"/>
+      <stop offset="0.6" stop-color="#082f49"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="uwBeam" cx="0.5" cy="0" r="0.8">
+      <stop offset="0" stop-color="#67e8f9" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#67e8f9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="uwGlowM" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e879f9" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#e879f9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="uwGlowC" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- water -->
+  <rect width="512" height="512" fill="url(#uwWater)"/>
+
+  <!-- light beams from surface -->
+  <polygon points="80,0 60,400 140,400 160,0" fill="url(#uwBeam)" opacity="0.75"/>
+  <polygon points="220,0 210,420 270,420 280,0" fill="url(#uwBeam)" opacity="0.6"/>
+  <polygon points="380,0 370,400 430,400 440,0" fill="url(#uwBeam)" opacity="0.75"/>
+
+  <!-- sea floor -->
+  <path d="M 0 460 Q 128 430 256 450 Q 384 470 512 440 L 512 512 L 0 512 Z" fill="#1f2937"/>
+
+  <!-- coral structures (with glow halos) -->
+  <ellipse cx="100" cy="440" rx="60" ry="30" fill="url(#uwGlowM)"/>
+  <path d="M 80 440 Q 100 380 120 440 Z" fill="#a21caf"/>
+  <path d="M 90 440 Q 105 390 120 440 Z" fill="#c026d3"/>
+
+  <ellipse cx="240" cy="450" rx="70" ry="36" fill="url(#uwGlowC)"/>
+  <path d="M 215 450 Q 240 380 265 450 Z" fill="#0e7490"/>
+  <path d="M 230 450 Q 245 390 260 450 Z" fill="#06b6d4"/>
+
+  <ellipse cx="400" cy="445" rx="60" ry="30" fill="url(#uwGlowM)"/>
+  <path d="M 380 445 Q 400 380 420 445 Z" fill="#a21caf"/>
+
+  <!-- fish silhouettes -->
+  <g fill="#0f172a">
+    <ellipse cx="170" cy="200" rx="10" ry="4"/>
+    <polygon points="160,200 154,196 154,204"/>
+    <ellipse cx="320" cy="270" rx="9" ry="3.5"/>
+    <polygon points="311,270 306,267 306,273"/>
+    <ellipse cx="380" cy="180" rx="11" ry="4"/>
+    <polygon points="369,180 363,176 363,184"/>
+    <ellipse cx="100" cy="290" rx="8" ry="3"/>
+    <polygon points="92,290 88,287 88,293"/>
+  </g>
+
+  <!-- bubbles -->
+  <g fill="#bae6fd" opacity="0.6">
+    <circle cx="120" cy="390" r="3"/>
+    <circle cx="124" cy="370" r="2"/>
+    <circle cx="260" cy="380" r="3"/>
+    <circle cx="262" cy="350" r="2"/>
+    <circle cx="410" cy="390" r="3"/>
+  </g>
+
+  <!-- demo watermark -->
+  <text x="256" y="500" font-family="sans-serif" font-size="11" fill="#ffffff" opacity="0.4" text-anchor="middle">demo target</text>
+</svg>
