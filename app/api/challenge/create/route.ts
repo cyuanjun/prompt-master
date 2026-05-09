@@ -1,11 +1,15 @@
-import { NextResponse } from 'next/server'
+import { after, NextResponse } from 'next/server'
+import {
+  generateAndStoreChallenge,
+  markClaimed,
+  refillOne,
+  tryClaimFromQueue,
+} from '@/lib/challenge'
 import { buildDemoId, isDemoMode, pickRandomScenario } from '@/lib/fixtures'
 
 export async function POST() {
   if (isDemoMode()) {
-    // Delay matches the LoadingView checklist animation (4 steps × 350ms ≈ 1400ms).
     await new Promise((r) => setTimeout(r, 1500))
-
     const scenario = pickRandomScenario()
     return NextResponse.json({
       challengeId: buildDemoId(scenario.key),
@@ -14,9 +18,41 @@ export async function POST() {
     })
   }
 
-  // Live path — wired up in Step 3.
-  return NextResponse.json(
-    { error: 'Live mode not yet implemented. Set NEXT_PUBLIC_DEMO_MODE=true.' },
-    { status: 501 },
-  )
+  try {
+    // Fast path: pull from the pre-generated queue.
+    const claimed = await tryClaimFromQueue()
+
+    if (claimed) {
+      // Top up the queue in the background — runs after response is sent.
+      after(refillOne)
+
+      return NextResponse.json({
+        challengeId: claimed.id,
+        targetImageUrl: claimed.target_image_url,
+        theme: claimed.theme,
+      })
+    }
+
+    // Slow path: queue is empty. Generate inline (~30s) and use it.
+    const fresh = await generateAndStoreChallenge()
+    await markClaimed(fresh.id)
+
+    // Top up so the next round is fast.
+    after(refillOne)
+
+    return NextResponse.json({
+      challengeId: fresh.id,
+      targetImageUrl: fresh.target_image_url,
+      theme: fresh.theme,
+    })
+  } catch (err) {
+    console.error('challenge/create live failed:', err)
+    return NextResponse.json(
+      {
+        error:
+          err instanceof Error ? err.message : 'Challenge creation failed',
+      },
+      { status: 500 },
+    )
+  }
 }

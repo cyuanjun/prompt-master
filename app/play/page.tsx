@@ -9,6 +9,7 @@ import { FeedbackCard } from '@/components/game/FeedbackCard'
 import { useGameState } from '@/components/game/GameStateProvider'
 import { ImageComparison } from '@/components/game/ImageComparison'
 import { ImprovedPromptCard } from '@/components/game/ImprovedPromptCard'
+import { PromptingTipsCard } from '@/components/game/PromptingTipsCard'
 import { PromptInput } from '@/components/game/PromptInput'
 import { ScoreBreakdown } from '@/components/game/ScoreBreakdown'
 import { ScoreRing } from '@/components/game/ScoreRing'
@@ -374,6 +375,7 @@ function ResultsView() {
   if (!state.challenge || !state.attempt) return null
 
   const { feedback, forfeit, generatedImageUrl, score } = state.attempt
+  const judgeFailed = !forfeit && !feedback
 
   return (
     <div className="flex flex-col gap-6">
@@ -400,6 +402,42 @@ function ResultsView() {
             No prompt was submitted before the timer expired. Try again?
           </p>
         </SketchCard>
+      ) : judgeFailed ? (
+        <SketchCard color="#fecdd3" rotate={-0.5}>
+          <h3
+            style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#dc2626',
+              margin: 0,
+              marginBottom: '0.5rem',
+            }}
+          >
+            ⚠ Judge failed — no score available
+          </h3>
+          <p style={{ fontSize: '0.95rem', color: '#1a1a1a', margin: 0 }}>
+            The AI judge couldn&apos;t score this round. This is a bug — check the
+            browser console + dev server logs for details.
+          </p>
+          {state.error && (
+            <pre
+              style={{
+                marginTop: '0.6rem',
+                fontFamily: 'var(--font-mono), ui-monospace, monospace',
+                fontSize: '0.75rem',
+                color: '#7f1d1d',
+                background: '#fff',
+                border: '1px solid #1a1a1a',
+                borderRadius: '4px',
+                padding: '0.5rem',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+              }}
+            >
+              {state.error}
+            </pre>
+          )}
+        </SketchCard>
       ) : (
         feedback && (
           <>
@@ -416,6 +454,8 @@ function ResultsView() {
               whatWorked={feedback.what_worked}
               whatToImprove={feedback.what_to_improve}
             />
+
+            <PromptingTipsCard tips={feedback.prompting_tips} />
 
             {showHint ? (
               <div className="flex flex-col gap-2">
@@ -436,7 +476,7 @@ function ResultsView() {
                   variant="amber"
                   onClick={() => setShowHint(true)}
                 >
-                  ✎ Show hint (improved prompt)
+                  ✎ Reveal the prompt that made it
                 </SketchButton>
               </div>
             )}

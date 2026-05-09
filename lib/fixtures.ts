@@ -35,6 +35,10 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       ],
       improved_prompt:
         'A rain-soaked cyberpunk street at night with magenta and pink neon signage reflecting on wet pavement, steam rising from manhole covers, and a large holographic billboard on the right side of the frame.',
+      prompting_tips: [
+        'Atmospheric effects (rain, steam, fog) need to be named explicitly — they don\'t appear by default just because the scene is "cyberpunk".',
+        'Specify color palette directly. "Magenta and teal neon" is more directive than "cyberpunk colors".',
+      ],
     },
   },
   {
@@ -63,6 +67,10 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       ],
       improved_prompt:
         'A cozy log cabin in an autumn forest at golden hour, with smoke curling from the stone chimney, the surrounding trees in deep orange and crimson, and fallen leaves scattered across a soft path leading to the door.',
+      prompting_tips: [
+        'When season matters, name it directly. "Autumn foliage in burnt orange and crimson" gives more control than "forest".',
+        'Active details create life. "Smoke curling from the chimney" tells a story that "a chimney" alone does not.',
+      ],
     },
   },
   {
@@ -91,6 +99,10 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       ],
       improved_prompt:
         'An underwater bioluminescent reef in deep ocean blue, with corals glowing in cyan and magenta, soft light beams streaming down from the surface, and small silhouetted fish drifting through the scene.',
+      prompting_tips: [
+        'Light effects need their own words. "Beams of light streaming from the surface" do not appear unless you name them.',
+        'Glow and bioluminescence need explicit prompting. "Glowing cyan corals" is much stronger than "colorful corals".',
+      ],
     },
   },
   {
@@ -119,6 +131,10 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       ],
       improved_prompt:
         'A desert oasis at sunset with a low orange sun resting on the horizon, two palm trees silhouetted against a pink-to-amber sky, soft rolling dunes, the calm oasis water reflecting the colors above, and a pair of birds silhouetted in flight.',
+      prompting_tips: [
+        'Time of day defines mood. "Golden hour", "sunset", "twilight" each signal different palettes — pick one explicitly.',
+        'Reflections need explicit description. "Water reflecting the orange sky" is more directive than just "water".',
+      ],
     },
   },
   {
@@ -147,6 +163,10 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       ],
       improved_prompt:
         'A medieval stone castle perched on a jagged cliff during a violent storm, with a bright lightning bolt splitting the dark layered clouds, white waves crashing against the rocks below, and visible crenellations and a tall tower silhouetted against the sky.',
+      prompting_tips: [
+        'Action verbs intensify scenes. "Lightning splitting the sky" is more dramatic than "storm clouds".',
+        'Architectural specifics matter. "Crenellations", "tall tower", "jagged cliff" shape structures precisely — generic words like "castle" leave too much to the model.',
+      ],
     },
   },
 ]

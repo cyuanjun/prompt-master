@@ -29,7 +29,7 @@ export function ImprovedPromptCard({ prompt }: { prompt: string }) {
             margin: 0,
           }}
         >
-          ✎ Improved prompt
+          ✎ The actual prompt
         </h3>
         <button
           type="button"

@@ -13,7 +13,9 @@ const STEPS = [
   'Scoring your attempt…',
 ]
 
-const STEP_INTERVAL_MS = 600
+// Within a phase, how long before the second step appears (after the first).
+// Outer phase boundary is driven by API state, not the clock.
+const WITHIN_PHASE_INTERVAL_MS = 800
 
 export default function GeneratingPage() {
   const router = useRouter()
@@ -25,16 +27,31 @@ export default function GeneratingPage() {
     router.replace('/play')
   }, [state.gameState, router])
 
+  // Phase is derived from real API state:
+  //   submit → user image is being rendered (no generatedImageUrl yet)
+  //   judge  → image is rendered, we're scoring it
+  const phase: 'submit' | 'judge' = state.attempt?.generatedImageUrl
+    ? 'judge'
+    : 'submit'
+
+  // Within each phase, show first step active → after a short delay show
+  // the second step. The last step pulses (via the dots) until the API
+  // actually completes the phase. Math.max prevents jumping backwards if
+  // submit completes faster than the within-phase delay.
   useEffect(() => {
-    if (state.gameState !== 'generating') {
-      setVisibleCount(1)
-      return
-    }
-    const interval = setInterval(() => {
-      setVisibleCount((c) => Math.min(c + 1, STEPS.length))
-    }, STEP_INTERVAL_MS)
-    return () => clearInterval(interval)
-  }, [state.gameState])
+    if (state.gameState !== 'generating') return
+
+    const startCount = phase === 'submit' ? 1 : 3
+    const endCount = phase === 'submit' ? 2 : 4
+
+    setVisibleCount((c) => Math.max(c, startCount))
+
+    const t = setTimeout(() => {
+      setVisibleCount((c) => Math.max(c, endCount))
+    }, WITHIN_PHASE_INTERVAL_MS)
+
+    return () => clearTimeout(t)
+  }, [phase, state.gameState])
 
   if (state.gameState !== 'generating' || !state.challenge) {
     return null

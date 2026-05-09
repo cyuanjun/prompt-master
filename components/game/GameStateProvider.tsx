@@ -11,7 +11,6 @@ import {
   type ReactNode,
 } from 'react'
 import { createChallenge, judgeAttempt, submitAttempt } from '@/lib/api'
-import { DEMO_FEEDBACK } from '@/lib/fixtures'
 import type { AppState, Challenge, Feedback } from '@/lib/types'
 
 const INITIAL_STATE: AppState = {
@@ -30,6 +29,7 @@ type Action =
   | { type: 'SUBMIT_DONE'; attemptId: string; generatedImageUrl: string }
   | { type: 'JUDGE_DONE'; feedback: Feedback }
   | { type: 'FORFEIT_AND_RESULTS' }
+  | { type: 'JUDGE_FAILED'; error: string }
   | { type: 'REPLAY_SAME' }
   | { type: 'NEXT_CHALLENGE' }
   | { type: 'ERROR'; error: string }
@@ -98,6 +98,15 @@ function reducer(state: AppState, action: Action): AppState {
           score: 0,
           feedback: null,
         },
+      }
+
+    case 'JUDGE_FAILED':
+      // Move to results with whatever attempt we have, no feedback,
+      // and an error string the UI can display.
+      return {
+        ...state,
+        gameState: 'results',
+        error: action.error,
       }
 
     case 'REPLAY_SAME':
@@ -184,9 +193,9 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       const feedback = await judgeAttempt({ attemptId: submission.attemptId })
       dispatch({ type: 'JUDGE_DONE', feedback })
     } catch (err) {
-      // Soft fallback so the UI loop is never broken in demo or under flaky network.
-      console.error('submit/judge failed, using demo feedback', err)
-      dispatch({ type: 'JUDGE_DONE', feedback: DEMO_FEEDBACK })
+      console.error('submit/judge failed:', err)
+      const message = err instanceof Error ? err.message : String(err)
+      dispatch({ type: 'JUDGE_FAILED', error: message })
     }
   }, [])
 
